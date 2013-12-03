@@ -44,8 +44,8 @@
        this.bitVector[i] = 0;
   };
 
-  // Function that locates the bit true in bitVector
-  Bloomfilter.prototype.locate = function (word) {
+  // Function that locates the bit in bitVector with multiple hashing
+   Bloomfilter.prototype.locate = function (word) {
     var m = this.m;
     var location = this.locations;
     var hash1 = djb2Code(word);
@@ -58,7 +58,7 @@
     return location;
   };
 
-  // Function that Add to bitVector
+  // Function that Add to bitVector and set to it to true
   Bloomfilter.prototype.add = function (word) {
     if (typeof word !== "string" || word.trim().length === 0)
       throw new Error("Error- Parameter is not type string");
@@ -70,7 +70,7 @@
       bV[Math.ceil(location[i])] = 1;   
   };
 
-  // Function that Check in the bitVector
+  // Function that Check in the bitVector 
   Bloomfilter.prototype.check = function (word) {
     if (typeof word !== "string" || word.trim().length === 0)
       throw new Error("Error- Parameter is not type string");
@@ -97,15 +97,15 @@ for(var i = 0, l = arr.length; i < l; i++){
   b1.add(arr[i]);
 }
 console.log("Array: ", arr);
-console.log("Contain 'car'?", b1.check('car'));
-console.log("Contain 'mother'?", b1.check('mother'));
-console.log("Contain 'computer'?", b1.check('computer'));
-console.log("Contain 'room'?", b1.check('room'));
-console.log("Contain 'computer'?", b1.check('computer'));
+console.log("Might Contain 'car'?", b1.check('car'));
+console.log("Might Contain 'mother'?", b1.check('mother'));
+console.log("Might Contain 'computer'?", b1.check('computer'));
+console.log("Might Contain 'room'?", b1.check('room'));
+console.log("Might Contain 'computer'?", b1.check('computer'));
 
 console.log("Array: ", ["Hello", "World"]);
 var b2 = new Bloomfilter(); // By Default k= 3, m= 256
 b2.add("Hello");
 b2.add("World");
-console.log("Contain 'World'?", b2.check("World"));
-console.log("Contain 'computer'?", b2.check("computer"));
+console.log("Might Contain 'World'?", b2.check("World"));
+console.log("Might Contain 'computer'?", b2.check("computer"));
